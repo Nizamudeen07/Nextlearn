@@ -1,4 +1,5 @@
 const API_BASE_URL = 'https://nexlearn.noviindusdemosites.in';
+export const dynamic = 'force-dynamic';
 
 function buildTargetUrl(pathSegments, searchParams) {
   const path = Array.isArray(pathSegments) ? pathSegments.join('/') : '';
@@ -11,7 +12,8 @@ function buildTargetUrl(pathSegments, searchParams) {
 
 async function proxyRequest(request, { params }) {
   try {
-    const targetUrl = buildTargetUrl(params.path, request.nextUrl.searchParams);
+    const resolvedParams = await params;
+    const targetUrl = buildTargetUrl(resolvedParams?.path, request.nextUrl.searchParams);
     const headers = new Headers();
 
     const authorization = request.headers.get('authorization');
